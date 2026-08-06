@@ -1,0 +1,1 @@
+This directory is reserved for lightweight, anonymized sample data if a compact demo dataset is added later. The portfolio dashboard already runs from the tracked `dashboard/data/analytics.json` file.

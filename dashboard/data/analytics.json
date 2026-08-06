@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "dataThrough": "Aug 2018",
+    "sourceFiles": 9,
+    "sourceRows": 1550922,
+    "deliveredOrderRows": 96478
+  },
+  "kpis": {
+    "deliveredGmv": 15422461.77,
+    "deliveredOrders": 96478,
+    "uniqueCustomers": 93358,
+    "averageOrderValue": 159.86,
+    "lateDeliveryRate": 8.11,
+    "lateOrders": 7826,
+    "averageReviewScore": 4.16,
+    "positiveReviewShare": 78.9,
+    "yoyGmvGrowth": 143.3,
+    "comparableGmv2017": 3473862.76,
+    "comparableGmv2018": 8452975.2,
+    "repeatCustomerRate": 3.0,
+    "repeatCustomers": 2801
+  },
+  "monthly": [
+    {
+      "month": "Jan 17",
+      "gmv": 127545.67,
+      "orders": 750
+    },
+    {
+      "month": "Feb 17",
+      "gmv": 271298.65,
+      "orders": 1653
+    },
+    {
+      "month": "Mar 17",
+      "gmv": 414369.39,
+      "orders": 2546
+    },
+    {
+      "month": "Apr 17",
+      "gmv": 390952.18,
+      "orders": 2303
+    },
+    {
+      "month": "May 17",
+      "gmv": 567066.73,
+      "orders": 3546
+    },
+    {
+      "month": "Jun 17",
+      "gmv": 490225.6,
+      "orders": 3135
+    },
+    {
+      "month": "Jul 17",
+      "gmv": 566403.93,
+      "orders": 3872
+    },
+    {
+      "month": "Aug 17",
+      "gmv": 646000.61,
+      "orders": 4193
+    },
+    {
+      "month": "Sep 17",
+      "gmv": 701169.99,
+      "orders": 4150
+    },
+    {
+      "month": "Oct 17",
+      "gmv": 751140.27,
+      "orders": 4478
+    },
+    {
+      "month": "Nov 17",
+      "gmv": 1153528.05,
+      "orders": 7289
+    },
+    {
+      "month": "Dec 17",
+      "gmv": 843199.17,
+      "orders": 5513
+    },
+    {
+      "month": "Jan 18",
+      "gmv": 1078606.86,
+      "orders": 7069
+    },
+    {
+      "month": "Feb 18",
+      "gmv": 966510.88,
+      "orders": 6555
+    },
+    {
+      "month": "Mar 18",
+      "gmv": 1120678.0,
+      "orders": 7003
+    },
+    {
+      "month": "Apr 18",
+      "gmv": 1132933.95,
+      "orders": 6798
+    },
+    {
+      "month": "May 18",
+      "gmv": 1128836.69,
+      "orders": 6749
+    },
+    {
+      "month": "Jun 18",
+      "gmv": 1012090.68,
+      "orders": 6099
+    },
+    {
+      "month": "Jul 18",
+      "gmv": 1027903.86,
+      "orders": 6159
+    },
+    {
+      "month": "Aug 18",
+      "gmv": 985414.28,
+      "orders": 6351
+    }
+  ],
+  "categories": [
+    {
+      "name": "Health Beauty",
+      "productValue": 1233131.72,
+      "orders": 8647
+    },
+    {
+      "name": "Watches Gifts",
+      "productValue": 1166176.98,
+      "orders": 5495
+    },
+    {
+      "name": "Bed Bath Table",
+      "productValue": 1023434.76,
+      "orders": 9272
+    },
+    {
+      "name": "Sports Leisure",
+      "productValue": 954852.55,
+      "orders": 7530
+    },
+    {
+      "name": "Computers Accessories",
+      "productValue": 888724.61,
+      "orders": 6530
+    }
+  ],
+  "states": [
+    {
+      "code": "SP",
+      "gmv": 5770266.19,
+      "orders": 40501,
+      "uniqueCustomers": 39156,
+      "sharePct": 37.4
+    },
+    {
+      "code": "RJ",
+      "gmv": 2055690.45,
+      "orders": 12350,
+      "uniqueCustomers": 11917,
+      "sharePct": 13.3
+    },
+    {
+      "code": "MG",
+      "gmv": 1819277.61,
+      "orders": 11354,
+      "uniqueCustomers": 11001,
+      "sharePct": 11.8
+    },
+    {
+      "code": "RS",
+      "gmv": 861802.4,
+      "orders": 5345,
+      "uniqueCustomers": 5168,
+      "sharePct": 5.6
+    },
+    {
+      "code": "PR",
+      "gmv": 781919.55,
+      "orders": 4923,
+      "uniqueCustomers": 4769,
+      "sharePct": 5.1
+    }
+  ],
+  "paymentMix": [
+    {
+      "type": "credit_card",
+      "paymentValue": 12101094.88,
+      "orders": 74304,
+      "sharePct": 78.5,
+      "averageInstallments": 3.5
+    },
+    {
+      "type": "boleto",
+      "paymentValue": 2769932.58,
+      "orders": 19191,
+      "sharePct": 18.0,
+      "averageInstallments": 1.0
+    },
+    {
+      "type": "voucher",
+      "paymentValue": 343013.19,
+      "orders": 3679,
+      "sharePct": 2.2,
+      "averageInstallments": 1.0
+    },
+    {
+      "type": "debit_card",
+      "paymentValue": 208421.12,
+      "orders": 1485,
+      "sharePct": 1.4,
+      "averageInstallments": 1.0
+    }
+  ],
+  "delivery": {
+    "onTimeOrEarly": {
+      "orders": 88644,
+      "averageDeliveryDays": 10.9,
+      "averageReviewScore": 4.29
+    },
+    "late": {
+      "orders": 7826,
+      "averageDeliveryDays": 31.5,
+      "averageReviewScore": 2.57
+    },
+    "reviewGap": 1.73,
+    "priorityStates": [
+      {
+        "code": "AL",
+        "orders": 397,
+        "lateDeliveryRate": 23.9,
+        "averageReviewScore": 3.85
+      },
+      {
+        "code": "MA",
+        "orders": 717,
+        "lateDeliveryRate": 19.7,
+        "averageReviewScore": 3.83
+      },
+      {
+        "code": "PI",
+        "orders": 476,
+        "lateDeliveryRate": 16.0,
+        "averageReviewScore": 3.99
+      },
+      {
+        "code": "CE",
+        "orders": 1279,
+        "lateDeliveryRate": 15.3,
+        "averageReviewScore": 3.94
+      }
+    ]
+  },
+  "retention": {
+    "overallRepeatRate": 3.0,
+    "firstOrderOnTimeRepeatRate": 3.04,
+    "firstOrderLateRepeatRate": 2.52,
+    "differencePoints": 0.52
+  }
+}
