@@ -159,7 +159,7 @@ npm run lint
 npm run build
 ```
 
-### 5. Continuous integration
+## Continuous integration
 
 `.github/workflows/quality.yml` runs the same checks on every push: compile the Python source, validate `dashboard/data/analytics.json`, then lint, type-check, and build the dashboard.
 
