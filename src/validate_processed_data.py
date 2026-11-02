@@ -26,13 +26,13 @@ def require(condition: bool, message: str) -> None:
         raise AssertionError(message)
 
 
-def main() -> None:
+def main(processed_dir=PROCESSED_DIR, expected_rows=EXPECTED_ROWS) -> None:
     tables = {
-        filename: pd.read_csv(PROCESSED_DIR / filename, low_memory=False)
-        for filename in EXPECTED_ROWS
+        filename: pd.read_csv(processed_dir / filename, low_memory=False)
+        for filename in expected_rows
     }
 
-    for filename, expected_rows in EXPECTED_ROWS.items():
+    for filename, expected_rows in expected_rows.items():
         require(len(tables[filename]) == expected_rows, f"Unexpected rows: {filename}")
 
     customers = tables["olist_customers.csv"]
@@ -44,12 +44,12 @@ def main() -> None:
     products = tables["olist_products.csv"]
     sellers = tables["olist_sellers.csv"]
     customer_zip_values = pd.read_csv(
-        PROCESSED_DIR / "olist_customers.csv",
+        processed_dir / "olist_customers.csv",
         usecols=["customer_zip_code_prefix"],
         dtype={"customer_zip_code_prefix": "string"},
     )["customer_zip_code_prefix"]
     seller_zip_values = pd.read_csv(
-        PROCESSED_DIR / "olist_sellers.csv",
+        processed_dir / "olist_sellers.csv",
         usecols=["seller_zip_code_prefix"],
         dtype={"seller_zip_code_prefix": "string"},
     )["seller_zip_code_prefix"]

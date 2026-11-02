@@ -1,0 +1,10 @@
+product_id,product_category_name,product_name_lenght,product_description_lenght,product_photos_qty,product_weight_g,product_length_cm,product_height_cm,product_width_cm
+ebd7c847c1e1cb69ec374ae0ebee1f4c,moveis_decoracao,50.0,228.0,3.0,1200.0,40.0,15.0,30.0
+4520766ec412348b8d4caa5e8a18c464,automotivo,59.0,956.0,1.0,50.0,16.0,16.0,17.0
+aa4383b373c6aca5d8797843e5594415,automotivo,46.0,232.0,1.0,420.0,24.0,19.0,21.0
+7b717060aa783eb7f23a747a3a733dd7,cool_stuff,46.0,595.0,2.0,500.0,16.0,12.0,22.0
+060cb19345d90064d1015407193c233d,automotivo,49.0,608.0,1.0,7150.0,65.0,10.0,65.0
+ad673c1cd02b966e931f9db4fdc34791,informatica_acessorios,39.0,1321.0,3.0,350.0,22.0,11.0,17.0
+595fac2a385ac33a80bd5114aec74eb8,perfumaria,29.0,178.0,1.0,400.0,19.0,13.0,19.0
+bff2010b28e8fbcff5a9db9d3fea5ac4,ferramentas_jardim,58.0,769.0,6.0,850.0,90.0,20.0,20.0
+f3dbf072e817667fbde052aae313cce1,esporte_lazer,45.0,599.0,1.0,18500.0,22.0,26.0,15.0

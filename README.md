@@ -161,7 +161,7 @@ npm run build
 
 ## Continuous integration
 
-`.github/workflows/quality.yml` runs the same checks on every push: compile the Python source, validate `dashboard/data/analytics.json`, then lint, type-check, and build the dashboard.
+`.github/workflows/quality.yml` runs the same checks on every push: compile the Python source, validate `dashboard/data/analytics.json`, run a small-data cleaning and KPI regression suite, then lint, type-check, and build the dashboard.
 
 ## SQL Server workflow
 
@@ -199,3 +199,7 @@ Follow [`sql/README.md`](sql/README.md), then execute the scripts in this order:
 ## License
 
 Project code is available under the [MIT License](LICENSE). The Olist dataset remains subject to its original source terms.
+
+## Pipeline tests
+
+`python -m unittest discover -s tests -v` runs without downloading the full dataset or starting SQL Server. The fixture exercises cleaning, key checks and dashboard export. Tests also verify that duplicate item keys and unknown orders are rejected, and that order-level GMV is not multiplied by joins. Full-dataset row-count checks remain in `src/validate_processed_data.py`.
