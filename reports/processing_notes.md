@@ -1,6 +1,6 @@
 # Processing notes
 
-Last validated: 2026-08-06
+Processing definition updated: 2026-11-04
 
 ## Generated outputs
 
@@ -45,3 +45,9 @@ Successful result:
 ```text
 CHECKS_OK|files=9|orders=99441|items=112650
 ```
+
+## Delivery snapshot
+
+Delivery delay compares calendar dates. Missing actual or estimated delivery dates keep an unknown flag; they are excluded from late-rate denominators. The snapshot module additionally requires delivery by its cutoff and excludes reviews answered later.
+
+The primary category is selected after summing item prices within each order-category pair, with alphabetical tie-breaking. Payments and reviews are aggregated separately. A cohort customer is eligible only after 90 days from the first visible delivered-order purchase; later purchases are measured within that window and must also be delivered by the cutoff.

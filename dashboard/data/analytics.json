@@ -10,8 +10,9 @@
     "deliveredOrders": 96478,
     "uniqueCustomers": 93358,
     "averageOrderValue": 159.86,
-    "lateDeliveryRate": 8.11,
-    "lateOrders": 7826,
+    "lateDeliveryRate": 6.77,
+    "lateOrders": 6534,
+    "knownDeliveryDateOrders": 96470,
     "averageReviewScore": 4.16,
     "positiveReviewShare": 78.9,
     "yoyGmvGrowth": 143.3,
@@ -218,40 +219,40 @@
   ],
   "delivery": {
     "onTimeOrEarly": {
-      "orders": 88644,
-      "averageDeliveryDays": 10.9,
+      "orders": 89936,
+      "averageDeliveryDays": 11.0,
       "averageReviewScore": 4.29
     },
     "late": {
-      "orders": 7826,
-      "averageDeliveryDays": 31.5,
-      "averageReviewScore": 2.57
+      "orders": 6534,
+      "averageDeliveryDays": 34.0,
+      "averageReviewScore": 2.27
     },
-    "reviewGap": 1.73,
+    "reviewGap": 2.02,
     "priorityStates": [
       {
         "code": "AL",
         "orders": 397,
-        "lateDeliveryRate": 23.9,
+        "lateDeliveryRate": 21.4,
         "averageReviewScore": 3.85
       },
       {
         "code": "MA",
         "orders": 717,
-        "lateDeliveryRate": 19.7,
+        "lateDeliveryRate": 17.4,
         "averageReviewScore": 3.83
+      },
+      {
+        "code": "SE",
+        "orders": 335,
+        "lateDeliveryRate": 15.2,
+        "averageReviewScore": 3.91
       },
       {
         "code": "PI",
         "orders": 476,
-        "lateDeliveryRate": 16.0,
+        "lateDeliveryRate": 13.9,
         "averageReviewScore": 3.99
-      },
-      {
-        "code": "CE",
-        "orders": 1279,
-        "lateDeliveryRate": 15.3,
-        "averageReviewScore": 3.94
       }
     ]
   },

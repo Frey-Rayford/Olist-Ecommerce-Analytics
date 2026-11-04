@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     "An end-to-end analytics project covering Olist commercial, customer, product, and delivery performance.",
   openGraph: {
     title: "Olist Commerce Pulse",
-    description: "Growth is strong. Delivery is the leverage.",
+    description: "Sales, delivery timing and repeat purchases in the Olist public dataset.",
     images: [{ url: "/og.png", width: 1440, height: 900 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Olist Commerce Pulse",
-    description: "Growth is strong. Delivery is the leverage.",
+    description: "Sales, delivery timing and repeat purchases in the Olist public dataset.",
     images: ["/og.png"],
   },
 };

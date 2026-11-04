@@ -61,6 +61,7 @@ export default function Home() {
           <a href="#growth">Growth</a>
           <a href="#market">Market</a>
           <a href="#operations">Operations</a>
+          <a href="/delivery">Delivery &amp; retention</a>
           <a href="#methodology">Method</a>
         </nav>
         <div className="dataBadge">
@@ -71,10 +72,10 @@ export default function Home() {
       <section className="hero" id="overview">
         <div className="heroCopy">
           <p className="eyebrow">Brazilian e-commerce · Analytical data story</p>
-          <h1>Growth is strong.<br />Delivery is the leverage.</h1>
+          <h1>Sales, delivery<br />and repeat orders.</h1>
           <p className="heroLead">
-            Olist more than doubled comparable delivered GMV, while late delivery
-            is strongly associated with lower customer satisfaction.
+            Explore sales, delivery timing and customer reviews in the Olist
+            public dataset. Open the delivery report to filter segments and compare repeat purchases.
           </p>
           <div className="heroTags" aria-label="Project technology stack">
             <span>Python pipeline</span>
@@ -115,7 +116,7 @@ export default function Home() {
         <article className="kpiCard alert">
           <p>Late delivery rate</p>
           <strong>{analytics.kpis.lateDeliveryRate}%</strong>
-          <span>{formatNumber(analytics.kpis.lateOrders)} delivered orders</span>
+          <span>{formatNumber(analytics.kpis.lateOrders)} late / {formatNumber(analytics.kpis.knownDeliveryDateOrders)} with known dates</span>
         </article>
         <article className="kpiCard">
           <p>Average review</p>
@@ -309,7 +310,7 @@ export default function Home() {
           <strong>{analytics.retention.overallRepeatRate}%</strong>
           <span>overall repeat-customer rate</span>
           <small>
-            First-order late customers repeated at {analytics.retention.firstOrderLateRepeatRate}% versus {analytics.retention.firstOrderOnTimeRepeatRate}% for on-time customers.
+            Observed across the available history, without a fixed follow-up window. Open the delivery report for the 90-day cohort comparison.
           </small>
         </div>
       </section>

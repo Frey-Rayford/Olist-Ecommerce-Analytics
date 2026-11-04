@@ -118,8 +118,8 @@ def main() -> None:
         - orders["order_purchase_timestamp"]
     ).dt.total_seconds() / 86_400
     orders["delivery_delay_days"] = (
-        orders["order_delivered_customer_date"]
-        - orders["order_estimated_delivery_date"]
+        orders["order_delivered_customer_date"].dt.normalize()
+        - orders["order_estimated_delivery_date"].dt.normalize()
     ).dt.total_seconds() / 86_400
     orders["is_late_delivery"] = orders["delivery_delay_days"].gt(0).astype("Int8")
     orders.loc[orders["delivery_delay_days"].isna(), "is_late_delivery"] = pd.NA

@@ -256,6 +256,7 @@ def build_payload() -> dict[str, object]:
             "averageOrderValue": _round(delivered["payment_value"].mean()),
             "lateDeliveryRate": _round(delivered["is_late_delivery"].mean() * 100),
             "lateOrders": int(delivered["is_late_delivery"].eq(1).sum()),
+            "knownDeliveryDateOrders": int(delivered["is_late_delivery"].notna().sum()),
             "averageReviewScore": _round(delivered["average_review_score"].mean()),
             "positiveReviewShare": _round(positive_review_share, 1),
             "yoyGmvGrowth": _round(yoy_growth, 1),

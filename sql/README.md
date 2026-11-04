@@ -24,6 +24,9 @@ Run each file in full:
 5. `04_create_views.sql`
 6. `06_data_quality_checks.sql`
 7. `05_kpi_analysis.sql`
+8. `07_delivery_retention.sql`
+
+The last script uses a 31 Aug 2018 snapshot and a 90-day follow-up window. Reload the processed files after rebuilding the pipeline: delivery status now compares calendar dates. This new query has not yet been executed against SQL Server; compare its output with `reports/delivery_findings.json` after refreshing the model.
 
 After step 6:
 

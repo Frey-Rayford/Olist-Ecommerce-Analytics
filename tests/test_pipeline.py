@@ -20,6 +20,20 @@ class PipelineTests(unittest.TestCase):
             build.main()
         self.counts = {p.name: len(pd.read_csv(p)) for p in self.processed.glob('*.csv')}
 
+    def test_cleaning_does_not_mark_same_day_evening_delivery_late(self):
+        import shutil
+        raw = self.processed / 'raw'
+        shutil.copytree(FIXTURE, raw)
+        orders = pd.read_csv(raw / 'olist_orders_dataset.csv')
+        promise = pd.Timestamp(orders.loc[0, 'order_estimated_delivery_date'])
+        orders.loc[0, 'order_delivered_customer_date'] = str(promise + pd.Timedelta(hours=20))
+        orders.to_csv(raw / 'olist_orders_dataset.csv', index=False)
+        with patch.object(build, 'RAW_DIR', raw), patch.object(build, 'PROCESSED_DIR', self.processed):
+            build.main()
+        cleaned = pd.read_csv(self.processed / 'olist_orders.csv')
+        self.assertEqual(cleaned.loc[0, 'is_late_delivery'], 0)
+        self.assertEqual(cleaned.loc[0, 'delivery_delay_days'], 0)
+
     def test_fixture_runs_through_cleaning_relationship_checks_and_export(self):
         validate.main(self.processed, self.counts)
         with patch.object(export, 'PROCESSED_DIR', self.processed), patch.object(export, 'PROJECT_DIR', self.processed):

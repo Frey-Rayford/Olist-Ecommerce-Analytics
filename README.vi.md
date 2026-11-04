@@ -14,8 +14,8 @@ Dự án portfolio Data Analyst đầy đủ end-to-end: chuyển bộ dữ li�
 | Đơn hàng đã giao được phân tích | 96,478 |
 | GMV đơn đã giao | R$15.42M |
 | Tăng trưởng GMV Jan–Aug (cùng kỳ) | +143.3% YoY |
-| Tỷ lệ giao trễ | 8.11% |
-| Chênh lệch điểm đánh giá của đơn trễ | −1.73 điểm |
+| Tỷ lệ giao trễ | 6.77% |
+| Chênh lệch điểm đánh giá của đơn trễ | −2.02 điểm |
 
 > **Định nghĩa metric:** Delivered GMV là tổng giá trị thanh toán của khách cho các đơn đã giao, bao gồm phí ship. Product value được báo cáo riêng và không bao gồm phí ship.
 
@@ -56,8 +56,8 @@ File CSV phân tích đã xử lý
 
 - GMV đơn đã giao đạt **R$15.42M** trên **96,478** đơn đã giao.
 - GMV đơn đã giao Jan–Aug 2018 cao hơn **143.3%** so với cùng kỳ 2017.
-- **8.11%** đơn đã giao đến trễ hơn ngày giao dự kiến.
-- Đơn giao trễ có điểm đánh giá trung bình **2.57/5**, so với **4.29/5** của đơn giao đúng hạn hoặc sớm.
+- **6.77%** đơn đã giao đến trễ hơn ngày giao dự kiến.
+- Đơn giao trễ có điểm đánh giá trung bình **2.27/5**, so với **4.29/5** của đơn giao đúng hạn hoặc sớm.
 - SP, RJ, và MG tạo ra khoảng **62.5%** GMV đơn đã giao.
 - Tỷ lệ khách quay lại mua khoảng **3.0%**.
 - Khách có đơn đầu tiên giao trễ quay lại mua ở mức **2.52%**, so với **3.04%** ở khách có đơn đầu giao đúng hạn hoặc sớm. Đây là liên hệ mang tính mô tả, không phải ước lượng nhân quả.
@@ -199,3 +199,9 @@ Xem [`sql/README.md`](sql/README.md), sau đó chạy các script theo thứ t�
 ## Giấy phép
 
 Mã nguồn của project được phát hành theo [Giấy phép MIT](LICENSE). Bộ dữ liệu Olist vẫn tuân theo điều khoản gốc của nguồn dữ liệu.
+
+## Phân tích giao hàng và mua lại
+
+Trang `/delivery` có bộ lọc tháng, bang, nhóm hàng và xuất CSV theo lựa chọn. Phân tích mua lại dùng cửa sổ 90 ngày; loại khách chưa đủ thời gian theo dõi. [Case study](reports/delivery_case_study.md) ghi số mẫu và giới hạn; [Power BI](powerbi/README.md) có query import, DAX và hướng dẫn model.
+
+Định nghĩa giao trễ đã sửa sang so sánh ngày lịch. 1.292 đơn giao buổi tối trong đúng ngày hẹn trước đây bị tính nhầm. Tỷ lệ đúng trên toàn bộ đơn có đủ ngày là 6,77%, thay cho 8,11%. Snapshot đến 31/08/2018 có phạm vi riêng và tỷ lệ 6,72%.

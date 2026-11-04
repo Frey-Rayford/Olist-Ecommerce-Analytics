@@ -1,0 +1,73 @@
+{
+  "snapshot": "2018-08-31",
+  "orders": 96411,
+  "known_delivery_dates": 96411,
+  "late_orders": 6475,
+  "late_rate": 0.0671603862629783,
+  "late_review": 2.2699809705042817,
+  "on_time_review": 4.289853032793653,
+  "late_reviewed_orders": 6306,
+  "on_time_reviewed_orders": 88818,
+  "newer_customers_excluded": 17595,
+  "cohorts": {
+    "on_time": {
+      "customers": 86995,
+      "eligible": 70002,
+      "repeated": 1418,
+      "repeat_rate": 0.020256564098168624,
+      "wilson_95": [
+        0.019238991019163612,
+        0.02132678748792232
+      ]
+    },
+    "late": {
+      "customers": 6298,
+      "eligible": 5696,
+      "repeated": 101,
+      "repeat_rate": 0.01773174157303371,
+      "wilson_95": [
+        0.014615229307400496,
+        0.021498311798580215
+      ]
+    },
+    "unknown": {
+      "customers": 0,
+      "eligible": 0,
+      "repeated": 0,
+      "repeat_rate": null,
+      "wilson_95": null
+    }
+  },
+  "top_states_by_late_orders": [
+    {
+      "state": "SP",
+      "late": 1800,
+      "known": 40474,
+      "late_rate": 0.04447299500914167
+    },
+    {
+      "state": "RJ",
+      "late": 1483,
+      "known": 12338,
+      "late_rate": 0.12019776300859135
+    },
+    {
+      "state": "MG",
+      "late": 513,
+      "known": 11348,
+      "late_rate": 0.045206203736341204
+    },
+    {
+      "state": "BA",
+      "late": 393,
+      "known": 3253,
+      "late_rate": 0.12081155856132801
+    },
+    {
+      "state": "RS",
+      "late": 322,
+      "known": 5341,
+      "late_rate": 0.06028833551769332
+    }
+  ]
+}

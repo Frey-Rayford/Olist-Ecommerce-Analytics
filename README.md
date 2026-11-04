@@ -4,7 +4,7 @@
 
 An end-to-end Data Analyst portfolio project that converts the Brazilian Olist marketplace dataset into a reproducible Python pipeline, a validated SQL Server model, documented business analysis, and an interactive Next.js data story.
 
-![Olist Commerce Pulse dashboard](assets/dashboard-preview.png)
+![Delivery and retention report with filters, review samples and 90-day cohorts](assets/delivery-preview.png)
 
 ## Project at a glance
 
@@ -14,8 +14,8 @@ An end-to-end Data Analyst portfolio project that converts the Brazilian Olist m
 | Delivered orders analyzed | 96,478 |
 | Delivered GMV | R$15.42M |
 | Comparable Jan–Aug GMV growth | +143.3% YoY |
-| Late-delivery rate | 8.11% |
-| Review-score gap for late orders | −1.73 points |
+| Late-delivery rate | 6.77% |
+| Review-score gap for late orders | −2.02 points |
 
 > **Metric definition:** Delivered GMV is the sum of customer payment value for delivered orders and includes freight. Product value is reported separately and excludes freight.
 
@@ -32,7 +32,7 @@ An end-to-end Data Analyst portfolio project that converts the Brazilian Olist m
 - A reusable Python cleaning pipeline for nine related CSV files.
 - Automated checks for row counts, primary keys, composite keys, foreign keys, ZIP-code formatting, and calculated fields.
 - A SQL Server 2019 staging and core model with constraints, indexes, reusable views, KPI queries, and data-quality checks.
-- An executed Jupyter Notebook for exploratory analysis and portfolio charts.
+- A Jupyter Notebook for exploratory analysis and portfolio charts.
 - A Next.js dashboard that imports a generated `analytics.json` file instead of hardcoded KPI values.
 - Reproducible setup scripts and documentation for local execution.
 
@@ -56,11 +56,11 @@ Processed analytical CSV files
 
 - Delivered GMV reached **R$15.42M** across **96,478** delivered orders.
 - Jan–Aug 2018 delivered GMV was **143.3%** above the comparable 2017 period.
-- **8.11%** of delivered orders arrived after the estimated delivery date.
-- Late orders averaged **2.57/5** in reviews versus **4.29/5** for on-time or early orders.
+- **6.77%** of delivered orders arrived after the estimated delivery date.
+- Late orders averaged **2.27/5** in reviews versus **4.29/5** for on-time or early orders.
 - SP, RJ, and MG generated approximately **62.5%** of delivered GMV.
 - The repeat-customer rate was approximately **3.0%**.
-- Customers whose first delivered order was late repeated at **2.52%**, compared with **3.04%** for customers whose first order arrived on time or early. This is a descriptive association, not a causal estimate.
+- The delivery report compares repeat purchases over a fixed 90-day window and excludes customers without enough follow-up; see the case study for denominators.
 
 ## Selected analysis
 
@@ -103,7 +103,7 @@ data/
   raw/           Original source files, excluded from Git
   processed/     Generated analytical files, excluded from Git
   sample/        Documentation for lightweight examples
-notebooks/       Executed exploratory analysis notebook
+notebooks/       Exploratory analysis notebook
 reports/         Data model, inventory, processing, and KPI documentation
 sql/             SQL Server schema, transformations, views, KPIs, and checks
 src/             Python processing, validation, and dashboard export scripts
@@ -174,6 +174,7 @@ Follow [`sql/README.md`](sql/README.md), then execute the scripts in this order:
 5. `04_create_views.sql`
 6. `06_data_quality_checks.sql`
 7. `05_kpi_analysis.sql`
+8. `07_delivery_retention.sql`
 
 ## Documentation
 
@@ -181,7 +182,7 @@ Follow [`sql/README.md`](sql/README.md), then execute the scripts in this order:
 - [Raw data inventory](reports/raw_data_inventory.md)
 - [Processing notes](reports/processing_notes.md)
 - [SQL KPI results](reports/sql_kpi_results.md)
-- [Executed EDA notebook](notebooks/01_olist_eda.ipynb)
+- [EDA notebook](notebooks/01_olist_eda.ipynb)
 - [Dashboard documentation](dashboard/README.md)
 
 ## Limitations
@@ -203,3 +204,22 @@ Project code is available under the [MIT License](LICENSE). The Olist dataset re
 ## Pipeline tests
 
 `python -m unittest discover -s tests -v` runs without downloading the full dataset or starting SQL Server. The fixture exercises cleaning, key checks and dashboard export. Tests also verify that duplicate item keys and unknown orders are rejected, and that order-level GMV is not multiplied by joins. Full-dataset row-count checks remain in `src/validate_processed_data.py`.
+
+## Delivery and retention report
+
+Open `/delivery` after starting the dashboard. Filters cover purchase month, customer state and primary product category. The report shows late-order counts, review coverage, sample thresholds and a 90-day repeat-purchase comparison with Wilson intervals. Export downloads the currently filtered segment summary.
+
+The snapshot includes purchases, deliveries and reviews observed by 31 Aug 2018, so its order count differs from the overview's final delivered-order count. Cohort filters describe the customer's first delivered order in available history.
+
+- [Case study and findings](reports/delivery_case_study.md)
+- [Exact counts and denominators](reports/delivery_findings.json)
+- [Power BI import queries, DAX and model setup](powerbi/README.md)
+- [T-SQL analysis](sql/07_delivery_retention.sql)
+
+Rebuild with `python src/run_pipeline.py`. Run `python -m unittest discover -s tests -v`, then `npm test` and `npm run validate` in `dashboard/`.
+
+### Metric correction
+
+Late delivery now compares calendar dates rather than timestamps. The old method counted 1,292 evening deliveries on the promised day as late. The full dataset contains 6,534 late orders among 96,470 orders with known dates (6.77%); eight delivered orders have missing delivery dates. The previous 8.11% figure is superseded.
+
+Power BI assets are import queries and measures, not a completed `.pbix` report. The T-SQL script should be run against the refreshed SQL model before claiming a new SQL Server validation.

@@ -35,3 +35,6 @@ data/processed/*
 
 # Logs
 *.log
+
+# Local Power BI imports (generated from the processed data)
+powerbi/data/

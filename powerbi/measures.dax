@@ -1,0 +1,32 @@
+// Create each table and measure separately in Power BI Desktop.
+DimMonth = DISTINCT(UNION(SELECTCOLUMNS(fact_orders, "month", fact_orders[purchase_month]), SELECTCOLUMNS(customer_cohorts, "month", customer_cohorts[purchase_month])))
+
+DimState = DISTINCT(UNION(SELECTCOLUMNS(fact_orders, "state", fact_orders[customer_state]), SELECTCOLUMNS(customer_cohorts, "state", customer_cohorts[customer_state])))
+
+DimCategory = DISTINCT(UNION(SELECTCOLUMNS(fact_orders, "category", fact_orders[primary_category]), SELECTCOLUMNS(customer_cohorts, "category", customer_cohorts[primary_category])))
+
+Delivered Orders = COALESCE(COUNTROWS(fact_orders), 0)
+
+Orders With Known Dates = CALCULATE([Delivered Orders], KEEPFILTERS(fact_orders[delivery_status] <> "unknown"))
+
+Late Orders = COALESCE(CALCULATE([Delivered Orders], KEEPFILTERS(fact_orders[delivery_status] = "late")), 0)
+
+Late Delivery Rate = DIVIDE([Late Orders], [Orders With Known Dates])
+
+Reviewed Orders = COUNT(fact_orders[review_score])
+
+Late Review = CALCULATE(AVERAGE(fact_orders[review_score]), KEEPFILTERS(fact_orders[delivery_status] = "late"))
+
+On Time Review = CALCULATE(AVERAGE(fact_orders[review_score]), KEEPFILTERS(fact_orders[delivery_status] = "on_time"))
+
+Review Gap = IF(NOT ISBLANK([Late Review]) && NOT ISBLANK([On Time Review]), [Late Review] - [On Time Review])
+
+Delivered GMV = SUM(fact_orders[gmv])
+
+Eligible Customers = CALCULATE(COUNTROWS(customer_cohorts), KEEPFILTERS(customer_cohorts[eligible] = TRUE()))
+
+Repeat Customers 90d = COALESCE(CALCULATE([Eligible Customers], KEEPFILTERS(customer_cohorts[repeat_within_window] = TRUE())), 0)
+
+Repeat Rate 90d = DIVIDE([Repeat Customers 90d], [Eligible Customers])
+
+Newer Customers Excluded = CALCULATE(COUNTROWS(customer_cohorts), KEEPFILTERS(customer_cohorts[eligible] = FALSE()))

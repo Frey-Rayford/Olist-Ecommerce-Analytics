@@ -19,6 +19,7 @@ jobs:
         run: |
           python -m compileall src
           python -m json.tool dashboard/data/analytics.json > /dev/null
+          python -m json.tool dashboard/public/delivery-data.json > /dev/null
 
       - name: Test cleaning, relationships and KPI export
         run: |
@@ -38,4 +39,4 @@ jobs:
 
       - name: Lint, type-check, and build dashboard
         working-directory: dashboard
-        run: npm run validate
+        run: npm test && npm run validate
