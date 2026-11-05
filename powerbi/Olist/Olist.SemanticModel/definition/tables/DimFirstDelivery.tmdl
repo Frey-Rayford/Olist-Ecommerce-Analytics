@@ -1,0 +1,19 @@
+table DimFirstDelivery
+	lineageTag: 3a0819e3-e3bb-405b-bb4b-6011eb5058af
+
+	column status
+		dataType: string
+		isHidden
+		lineageTag: 07d7d621-9bbd-4b9b-aca3-a7ed03f90c4d
+		summarizeBy: none
+		sourceColumn: status
+
+	column label
+		dataType: string
+		lineageTag: 6ab75678-7401-45ec-9756-2d796d2a7365
+		summarizeBy: none
+		sourceColumn: label
+
+	partition DimFirstDelivery = m
+		mode: import
+		source = #table(type table [status = text, label = text], {{"on_time", "First order on time"}, {"late", "First order late"}, {"unknown", "Unknown date"}})

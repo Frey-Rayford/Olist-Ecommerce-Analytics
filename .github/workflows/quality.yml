@@ -37,6 +37,9 @@ jobs:
         working-directory: dashboard
         run: npm ci
 
+      - name: Validate Power BI report definitions
+        run: npx --yes @microsoft/powerbi-report-authoring-cli@0.5.0 validate powerbi/Olist/Olist.pbip --no-schema
+
       - name: Lint, type-check, and build dashboard
         working-directory: dashboard
         run: npm test && npm run validate

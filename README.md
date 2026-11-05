@@ -213,7 +213,7 @@ The snapshot includes purchases, deliveries and reviews observed by 31 Aug 2018,
 
 - [Case study and findings](reports/delivery_case_study.md)
 - [Exact counts and denominators](reports/delivery_findings.json)
-- [Power BI import queries, DAX and model setup](powerbi/README.md)
+- [Power BI report: Delivery and Repeat purchase](powerbi/README.md)
 - [T-SQL analysis](sql/07_delivery_retention.sql)
 
 Rebuild with `python src/run_pipeline.py`. Run `python -m unittest discover -s tests -v`, then `npm test` and `npm run validate` in `dashboard/`.
@@ -222,4 +222,4 @@ Rebuild with `python src/run_pipeline.py`. Run `python -m unittest discover -s t
 
 Late delivery now compares calendar dates rather than timestamps. The old method counted 1,292 evening deliveries on the promised day as late. The full dataset contains 6,534 late orders among 96,470 orders with known dates (6.77%); eight delivered orders have missing delivery dates. The previous 8.11% figure is superseded.
 
-Power BI assets are import queries and measures, not a completed `.pbix` report. The T-SQL script should be run against the refreshed SQL model before claiming a new SQL Server validation.
+The Power BI report is an editable `.pbip` project with a TMDL model and two PBIR report pages. Its DAX results were checked in Power BI Desktop against the Python findings; see [validation](reports/powerbi_validation.json). No `.pbix` export is included. The T-SQL script still needs to be run against the refreshed SQL model before claiming a new SQL Server validation.

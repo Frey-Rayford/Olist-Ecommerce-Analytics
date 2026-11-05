@@ -1,0 +1,44 @@
+﻿{
+    "verified_date":  "2026-11-05",
+    "engine":  "Power BI Desktop local Analysis Services",
+    "snapshot":  "2018-08-31",
+    "result":  "passed",
+    "totals":  {
+                   "[orders]":  96411,
+                   "[known_delivery_dates]":  96411,
+                   "[late_orders]":  6475,
+                   "[late_rate]":  0.0671603862629783,
+                   "[late_review]":  2.2699809705042817,
+                   "[on_time_review]":  4.2898530327936522,
+                   "[late_reviewed_orders]":  6306,
+                   "[on_time_reviewed_orders]":  88818,
+                   "[newer_customers_excluded]":  17595
+               },
+    "cohorts":  [
+                    {
+                        "customer_cohorts[first_delivery_status]":  "on_time",
+                        "[eligible]":  70002,
+                        "[repeated]":  1418,
+                        "[rate]":  0.020256564098168624,
+                        "[lower]":  0.019238991019163612,
+                        "[upper]":  0.02132678748792232
+                    },
+                    {
+                        "customer_cohorts[first_delivery_status]":  "late",
+                        "[eligible]":  5696,
+                        "[repeated]":  101,
+                        "[rate]":  0.01773174157303371,
+                        "[lower]":  0.014615229307400494,
+                        "[upper]":  0.021498311798580211
+                    }
+                ],
+    "rj_filter":  {
+                      "[orders]":  12338,
+                      "[late]":  1483,
+                      "[rate]":  0.12019776300859135
+                  },
+    "trend_threshold":  {
+                            "[late_trend]":  null,
+                            "[repeat_trend]":  null
+                        }
+}

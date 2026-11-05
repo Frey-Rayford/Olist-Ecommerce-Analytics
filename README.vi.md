@@ -202,6 +202,6 @@ Mã nguồn của project được phát hành theo [Giấy phép MIT](LICENSE).
 
 ## Phân tích giao hàng và mua lại
 
-Trang `/delivery` có bộ lọc tháng, bang, nhóm hàng và xuất CSV theo lựa chọn. Phân tích mua lại dùng cửa sổ 90 ngày; loại khách chưa đủ thời gian theo dõi. [Case study](reports/delivery_case_study.md) ghi số mẫu và giới hạn; [Power BI](powerbi/README.md) có query import, DAX và hướng dẫn model.
+Trang `/delivery` có bộ lọc tháng, bang, nhóm hàng và xuất CSV theo lựa chọn. Phân tích mua lại dùng cửa sổ 90 ngày; loại khách chưa đủ thời gian theo dõi. [Case study](reports/delivery_case_study.md) ghi số mẫu và giới hạn. [Báo cáo Power BI](powerbi/README.md) có hai trang Delivery và Repeat purchase, mô hình TMDL và 19 measures; DAX đã được đối chiếu trực tiếp trong Desktop. Bản lưu là project `.pbip`, chưa có file `.pbix`.
 
 Định nghĩa giao trễ đã sửa sang so sánh ngày lịch. 1.292 đơn giao buổi tối trong đúng ngày hẹn trước đây bị tính nhầm. Tỷ lệ đúng trên toàn bộ đơn có đủ ngày là 6,77%, thay cho 8,11%. Snapshot đến 31/08/2018 có phạm vi riêng và tỷ lệ 6,72%.

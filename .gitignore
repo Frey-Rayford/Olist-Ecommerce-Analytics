@@ -38,3 +38,8 @@ data/processed/*
 
 # Local Power BI imports (generated from the processed data)
 powerbi/data/
+
+# Power BI Desktop local caches and user settings
+**/.pbi/
+*.pbix
+*.pbit

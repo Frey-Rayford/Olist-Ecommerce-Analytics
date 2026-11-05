@@ -1,0 +1,181 @@
+table fact_orders
+	lineageTag: 4eae182b-8c91-4a6f-8469-d253a3b366b2
+
+	measure 'Delivered Orders' = COALESCE(COUNTROWS(fact_orders), 0)
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: ab7eea41-b1c4-45b8-8f9a-04892f1aad72
+
+	measure 'Orders With Known Dates' = CALCULATE([Delivered Orders], KEEPFILTERS(fact_orders[delivery_status] <> "unknown"))
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: b0b63097-e42f-4a79-8260-bf2fcb41044d
+
+	measure 'Late Orders' = COALESCE(CALCULATE([Delivered Orders], KEEPFILTERS(fact_orders[delivery_status] = "late")), 0)
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: d60b95a5-97d0-47cf-9a33-941de1acdc62
+
+	measure 'Late Delivery Rate' = DIVIDE([Late Orders], [Orders With Known Dates])
+		formatString: 0.00%
+		displayFolder: Delivery
+		lineageTag: 2f349994-5bd2-4bc3-92dd-360aed000528
+
+	measure 'Reviewed Orders' = COUNT(fact_orders[review_score])
+		formatString: 0.00
+		displayFolder: Delivery
+		lineageTag: e5a78346-b06b-4cf6-9471-aa251de76e28
+
+	measure 'Late Review' = CALCULATE(AVERAGE(fact_orders[review_score]), KEEPFILTERS(fact_orders[delivery_status] = "late"))
+		formatString: 0.00
+		displayFolder: Delivery
+		lineageTag: f5c14a30-c26b-4545-9154-07e001e16003
+
+	measure 'On Time Review' = CALCULATE(AVERAGE(fact_orders[review_score]), KEEPFILTERS(fact_orders[delivery_status] = "on_time"))
+		formatString: 0.00
+		displayFolder: Delivery
+		lineageTag: f76aac1e-0044-4488-91dd-bca360a8a3a5
+
+	measure 'Review Gap' = IF(NOT ISBLANK([Late Review]) && NOT ISBLANK([On Time Review]), [Late Review] - [On Time Review])
+		formatString: 0.00
+		displayFolder: Delivery
+		lineageTag: fc2cea36-0bfe-43cd-b878-3f1ca7c1b6f8
+
+	measure 'Delivered GMV' = SUM(fact_orders[gmv])
+		formatString: #,0.00
+		displayFolder: Delivery
+		lineageTag: 047aaf85-ed5f-4dda-9fcf-594682e1f4b7
+
+	measure 'Eligible Customers' = CALCULATE(COUNTROWS(customer_cohorts), KEEPFILTERS(customer_cohorts[eligible] = TRUE()))
+		formatString: #,0
+		displayFolder: Retention
+		lineageTag: 199b5510-6ee0-4a55-bce1-ad88a8a70d9c
+
+	measure 'Repeat Customers 90d' = IF([Eligible Customers] > 0, COALESCE(CALCULATE([Eligible Customers], KEEPFILTERS(customer_cohorts[repeat_within_window] = TRUE())), 0))
+		formatString: #,0
+		displayFolder: Retention
+		lineageTag: 18c97899-e6b3-4dc3-b627-2295a78ba635
+
+	measure 'Repeat Rate 90d' = DIVIDE([Repeat Customers 90d], [Eligible Customers])
+		formatString: 0.00%
+		displayFolder: Retention
+		lineageTag: f27d6f33-c2c7-40f1-831d-886fa3d4bae7
+
+	measure 'Newer Customers Excluded' = CALCULATE(COUNTROWS(customer_cohorts), KEEPFILTERS(customer_cohorts[eligible] = FALSE()))
+		formatString: #,0
+		displayFolder: Retention
+		lineageTag: 9de2bfab-d36b-4e27-ac19-25545eb000d4
+
+	measure 'Late Reviewed Orders' = CALCULATE([Reviewed Orders], KEEPFILTERS(fact_orders[delivery_status] = "late"))
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: 5dd11515-46f7-47fe-b1dd-a9fc2c7adaf8
+
+	measure 'On Time Reviewed Orders' = CALCULATE([Reviewed Orders], KEEPFILTERS(fact_orders[delivery_status] = "on_time"))
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: b5f1c2cb-57d1-4485-ad82-eb57399d8c42
+
+	measure 'Repeat CI Lower' = VAR n = [Eligible Customers] VAR p = [Repeat Rate 90d] VAR z = 1.959963984540054 RETURN IF(n > 0, MAX(0, DIVIDE(p + z*z/(2*n) - z*SQRT((p*(1-p)+z*z/(4*n))/n), 1+z*z/n)))
+		formatString: 0.00%
+		displayFolder: Retention
+		lineageTag: 0f780d55-da19-46d8-8434-6b788cae14f0
+
+	measure 'Repeat CI Upper' = VAR n = [Eligible Customers] VAR p = [Repeat Rate 90d] VAR z = 1.959963984540054 RETURN IF(n > 0, MIN(1, DIVIDE(p + z*z/(2*n) + z*SQRT((p*(1-p)+z*z/(4*n))/n), 1+z*z/n)))
+		formatString: 0.00%
+		displayFolder: Retention
+		lineageTag: a950ba49-c0e4-4958-8424-d8880356f790
+
+	measure 'Late Rate Trend' = IF([Orders With Known Dates] >= 200, [Late Delivery Rate])
+		formatString: 0.00%
+		displayFolder: Delivery
+		lineageTag: 6d456386-15cb-48ad-bc1d-7f4d6d724aa4
+
+	measure 'Repeat Rate Trend' = IF([Eligible Customers] >= 200, [Repeat Rate 90d])
+		formatString: 0.00%
+		displayFolder: Delivery
+		lineageTag: c2ebab35-9608-4c66-8fa6-315c7cb18717
+
+	column order_id
+		dataType: string
+		isHidden
+		lineageTag: fa75ebfa-a445-47dc-9aa7-dc72b57c88b5
+		summarizeBy: none
+		sourceColumn: order_id
+
+	column customer_unique_id
+		dataType: string
+		isHidden
+		lineageTag: 41a188b3-1918-46e7-9a29-0fa99f584f20
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+	column order_purchase_timestamp
+		dataType: dateTime
+		lineageTag: fb13c887-4d93-4bec-90b8-10c26835c83b
+		summarizeBy: none
+		sourceColumn: order_purchase_timestamp
+
+	column purchase_month
+		dataType: string
+		lineageTag: b48ea4dd-c4c7-4929-a5de-fb9af954e5ed
+		summarizeBy: none
+		sourceColumn: purchase_month
+
+	column customer_state
+		dataType: string
+		lineageTag: 8be6cbba-7f9e-4c08-b185-be545fa2fb0a
+		summarizeBy: none
+		sourceColumn: customer_state
+
+	column primary_category
+		dataType: string
+		lineageTag: 18b0d7fd-32e5-4c14-b2e3-86ec79c52917
+		summarizeBy: none
+		sourceColumn: primary_category
+
+	column delivery_status
+		dataType: string
+		lineageTag: 7257c306-e505-4d9c-8a75-4806818c70e6
+		summarizeBy: none
+		sourceColumn: delivery_status
+
+	column delivery_days
+		dataType: double
+		lineageTag: d3c72672-cbb4-445b-b2a1-055ba0544b29
+		summarizeBy: none
+		sourceColumn: delivery_days
+
+	column delay_days
+		dataType: double
+		lineageTag: 99fd3292-0b9d-406f-9fe0-bd4589d66262
+		summarizeBy: none
+		sourceColumn: delay_days
+
+	column review_score
+		dataType: double
+		lineageTag: d327fbc8-df55-41ee-8a6a-c62a9259adb3
+		summarizeBy: none
+		sourceColumn: review_score
+
+	column gmv
+		dataType: double
+		lineageTag: d3a46fea-a006-4f9c-b65e-39f776c93b76
+		summarizeBy: none
+		sourceColumn: gmv
+
+	partition fact_orders = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "/fact_orders.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Types = Table.TransformColumnTypes(Headers, {
+				        {"order_id", type text}, {"customer_unique_id", type text},
+				        {"order_purchase_timestamp", type datetime}, {"purchase_month", type text},
+				        {"customer_state", type text}, {"primary_category", type text},
+				        {"delivery_status", type text}, {"delivery_days", type number},
+				        {"delay_days", type number}, {"review_score", type number}, {"gmv", type number}
+				    }, "en-US")
+				in
+				    Types

@@ -1,0 +1,17 @@
+table DimCategory
+	lineageTag: 5a84e362-d9f0-4b07-aada-ec2246e2a5f2
+
+	column category
+		dataType: string
+		lineageTag: d0d83930-70c4-4a03-857e-6dc0576cd51a
+		summarizeBy: none
+		sourceColumn: category
+
+	partition DimCategory = m
+		mode: import
+		source =
+				let
+				    Values = List.Sort(List.Distinct(List.Combine({fact_orders[primary_category], customer_cohorts[primary_category]}))),
+				    Result = Table.FromColumns({Values}, type table [category = text])
+				in
+				    Result

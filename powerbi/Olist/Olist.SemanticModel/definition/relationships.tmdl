@@ -1,0 +1,27 @@
+relationship DimMonth_fact_orders
+	fromColumn: fact_orders.purchase_month
+	toColumn: DimMonth.month
+
+relationship DimMonth_customer_cohorts
+	fromColumn: customer_cohorts.purchase_month
+	toColumn: DimMonth.month
+
+relationship DimState_fact_orders
+	fromColumn: fact_orders.customer_state
+	toColumn: DimState.state
+
+relationship DimState_customer_cohorts
+	fromColumn: customer_cohorts.customer_state
+	toColumn: DimState.state
+
+relationship DimCategory_fact_orders
+	fromColumn: fact_orders.primary_category
+	toColumn: DimCategory.category
+
+relationship DimCategory_customer_cohorts
+	fromColumn: customer_cohorts.primary_category
+	toColumn: DimCategory.category
+
+relationship FirstDelivery_cohorts
+	fromColumn: customer_cohorts.first_delivery_status
+	toColumn: DimFirstDelivery.status

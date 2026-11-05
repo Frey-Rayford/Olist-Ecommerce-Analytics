@@ -25,7 +25,7 @@ Delivered GMV = SUM(fact_orders[gmv])
 
 Eligible Customers = CALCULATE(COUNTROWS(customer_cohorts), KEEPFILTERS(customer_cohorts[eligible] = TRUE()))
 
-Repeat Customers 90d = COALESCE(CALCULATE([Eligible Customers], KEEPFILTERS(customer_cohorts[repeat_within_window] = TRUE())), 0)
+Repeat Customers 90d = IF([Eligible Customers] > 0, COALESCE(CALCULATE([Eligible Customers], KEEPFILTERS(customer_cohorts[repeat_within_window] = TRUE())), 0))
 
 Repeat Rate 90d = DIVIDE([Repeat Customers 90d], [Eligible Customers])
 

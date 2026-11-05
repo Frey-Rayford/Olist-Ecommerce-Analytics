@@ -1,0 +1,17 @@
+table DimMonth
+	lineageTag: 768fd086-7526-4f7d-a183-159c71e1be63
+
+	column month
+		dataType: string
+		lineageTag: 7f4482ec-4df2-4526-b49d-0d4d667ca385
+		summarizeBy: none
+		sourceColumn: month
+
+	partition DimMonth = m
+		mode: import
+		source =
+				let
+				    Values = List.Sort(List.Distinct(List.Combine({fact_orders[purchase_month], customer_cohorts[purchase_month]}))),
+				    Result = Table.FromColumns({Values}, type table [month = text])
+				in
+				    Result

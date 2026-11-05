@@ -1,0 +1,17 @@
+table DimState
+	lineageTag: d9c85425-11c4-4373-a047-26ba8ee781ec
+
+	column state
+		dataType: string
+		lineageTag: a27241b0-b066-4d1d-aa53-87768db662d4
+		summarizeBy: none
+		sourceColumn: state
+
+	partition DimState = m
+		mode: import
+		source =
+				let
+				    Values = List.Sort(List.Distinct(List.Combine({fact_orders[customer_state], customer_cohorts[customer_state]}))),
+				    Result = Table.FromColumns({Values}, type table [state = text])
+				in
+				    Result

@@ -1,0 +1,2 @@
+expression DataFolder = "D:/Projects/olist-ecommerce-analytics/powerbi/data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ab370bfe-5793-439f-8625-d66f57eedd33
