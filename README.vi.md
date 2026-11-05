@@ -1,207 +1,72 @@
 # Olist E-commerce Analytics
 
-[🇬🇧 English](README.md) · [🇻🇳 Tiếng Việt](README.vi.md)
+[English](README.md) · [Tiếng Việt](README.vi.md)
 
-Dự án portfolio Data Analyst đầy đủ end-to-end: chuyển bộ dữ liệu sàn thương mại điện tử Olist (Brazil) thành pipeline Python có thể tái lập, mô hình SQL Server đã kiểm chứng, phân tích kinh doanh có tài liệu đầy đủ, và một data story tương tác bằng Next.js.
+Phân tích doanh thu, giao hàng và mua lại từ dữ liệu Olist. Python xử lý dữ liệu; SQL Server lưu mô hình quan hệ; Next.js và Power BI trình bày kết quả.
 
-![Olist Commerce Pulse dashboard](assets/dashboard-preview.png)
+![Báo cáo giao hàng với bộ lọc tháng, bang và nhóm hàng](assets/delivery-preview.png)
 
-## Tổng quan dự án
+Ảnh chụp báo cáo Next.js đang chạy. Phạm vi trong ảnh là các đơn đã giao được quan sát đến **31/08/2018**.
 
-| Phạm vi | Kết quả |
-|---|---:|
-| Dữ liệu nguồn | 9 file CSV · 1,550,922 dòng |
-| Đơn hàng đã giao được phân tích | 96,478 |
-| GMV đơn đã giao | R$15.42M |
-| Tăng trưởng GMV Jan–Aug (cùng kỳ) | +143.3% YoY |
-| Tỷ lệ giao trễ | 6.77% |
-| Chênh lệch điểm đánh giá của đơn trễ | −2.02 điểm |
+## Kết quả giao hàng và mua lại
 
-> **Định nghĩa metric:** Delivered GMV là tổng giá trị thanh toán của khách cho các đơn đã giao, bao gồm phí ship. Product value được báo cáo riêng và không bao gồm phí ship.
+- **96.411** đơn đã giao trước ngày chốt; **6.475 / 96.411 đơn (6,72%)** giao trễ.
+- Review trung bình **2,27/5** ở nhóm giao trễ (**6.306** đơn có review), so với **4,29/5** ở nhóm đúng hẹn (**88.818** đơn).
+- Mua lại trong 90 ngày: **1.418 / 70.002 khách (2,03%)** sau đơn đầu đúng hẹn; **101 / 5.696 khách (1,77%)** sau đơn đầu giao trễ.
+- Loại **17.595** khách mới vì chưa có đủ 90 ngày theo dõi.
 
-## Câu hỏi kinh doanh
+Khoảng tin cậy của hai tỷ lệ mua lại chồng lấp nhau. Đây là liên hệ mô tả, chưa chứng minh giao trễ làm thay đổi hành vi khách hàng. [Case study](reports/delivery_case_study.md) giải thích phương pháp; [file kết quả](reports/delivery_findings.json) lưu số đếm và mẫu số.
 
-1. GMV đơn đã giao và số lượng đơn thay đổi thế nào theo thời gian?
-2. Ngành hàng và tỉnh/bang khách hàng nào tạo ra nhiều giá trị nhất?
-3. Hiệu suất giao hàng liên quan thế nào đến điểm đánh giá?
-4. Mảng vận hành nào đáng để đào sâu thêm?
-5. Tỷ lệ khách quay lại thấp nói lên điều gì cho phân tích retention?
+## Các phần đã làm
 
-## Những gì tôi đã xây dựng
+- Làm sạch chín CSV liên quan; kiểm tra khóa, quan hệ và phép gộp theo đơn để tránh nhân số liệu khi join.
+- Bảng staging/core, view, truy vấn KPI và kiểm tra chất lượng trên SQL Server.
+- Trang tổng quan doanh thu và báo cáo `/delivery`: lọc tháng/bang/nhóm hàng, hiển thị số mẫu review, xuất CSV theo bộ lọc.
+- [Project Power BI hai trang](powerbi/README.md), gồm model TMDL, Power Query và 19 measures DAX. [Kiểm tra DAX trong Desktop](reports/powerbi_validation.json) đã khớp Python về tổng, cohort, bộ lọc RJ và ngưỡng mẫu nhỏ. Bản lưu là `.pbip`, chưa có bản xuất `.pbix`.
+- [Notebook EDA](notebooks/01_olist_eda.ipynb) và các biểu đồ từ dữ liệu đã xử lý.
 
-- Pipeline Python tái sử dụng để làm sạch 9 file CSV liên quan.
-- Kiểm tra tự động: số dòng, khóa chính, khóa kết hợp, khóa ngoại, định dạng mã ZIP, và các trường tính toán.
-- Mô hình staging và core trên SQL Server 2019 với constraint, index, view tái sử dụng, truy vấn KPI, và kiểm tra chất lượng dữ liệu.
-- Jupyter Notebook đã chạy để phân tích khám phá và tạo biểu đồ cho portfolio.
-- Dashboard Next.js import file `analytics.json` được sinh ra tự động, thay vì hardcode giá trị KPI.
-- Script setup và tài liệu để chạy lại được ở local.
+![Pipeline Python với các đầu ra SQL, web và Power BI riêng](assets/pipeline-overview.svg)
 
-## Pipeline dữ liệu
+## Tổng quan doanh thu: phạm vi khác
 
-![Olist analytics pipeline](assets/pipeline-overview.svg)
+Trang overview dùng trạng thái cuối của toàn bộ dữ liệu, thay vì chỉ các lần giao đã quan sát trước 31/08. Phạm vi này có **96.478** đơn đã giao, **R$15,42 triệu** GMV theo giá trị thanh toán, gồm phí vận chuyển. GMV tháng 1–8 tăng **143,3%** từ 2017 sang 2018 khi so cùng kỳ.
 
-```text
-File CSV gốc
-    ↓
-Làm sạch và kiểm tra bằng Python
-    ↓
-File CSV phân tích đã xử lý
-    ├── SQL Server staging → core model → kiểm tra KPI
-    └── Sinh ra dashboard/data/analytics.json
-                              ↓
-                         Dashboard Next.js
-```
+Tỷ lệ giao trễ đã sửa là **6.534 / 96.470 đơn có đủ ngày (6,77%)**; tám đơn đã giao thiếu ngày giao thực tế. Dùng **6,72%** cho snapshot trong ảnh và **6,77%** cho overview toàn bộ dữ liệu.
 
-## Phát hiện chính
+Giao trễ được tính theo ngày lịch. Cách so timestamp trước đây tính nhầm **1.292 đơn giao trong đúng ngày hẹn** là trễ. Tỷ lệ cũ **8,11%** và phép so mua lại không cố định thời gian theo dõi đã được thay thế. Cohort hiện tại dùng cùng cửa sổ 90 ngày cho cả hai nhóm.
 
-- GMV đơn đã giao đạt **R$15.42M** trên **96,478** đơn đã giao.
-- GMV đơn đã giao Jan–Aug 2018 cao hơn **143.3%** so với cùng kỳ 2017.
-- **6.77%** đơn đã giao đến trễ hơn ngày giao dự kiến.
-- Đơn giao trễ có điểm đánh giá trung bình **2.27/5**, so với **4.29/5** của đơn giao đúng hạn hoặc sớm.
-- SP, RJ, và MG tạo ra khoảng **62.5%** GMV đơn đã giao.
-- Tỷ lệ khách quay lại mua khoảng **3.0%**.
-- Khách có đơn đầu tiên giao trễ quay lại mua ở mức **2.52%**, so với **3.04%** ở khách có đơn đầu giao đúng hạn hoặc sớm. Đây là liên hệ mang tính mô tả, không phải ước lượng nhân quả.
+## Biểu đồ
 
-## Phân tích tiêu biểu
+![Điểm review theo tình trạng giao hàng](assets/delivery_review.png)
 
-<table>
-  <tr>
-    <td width="50%"><img src="assets/monthly_gmv.png" alt="Xu hướng GMV đơn đã giao theo tháng"></td>
-    <td width="50%"><img src="assets/delivery_review.png" alt="Điểm đánh giá theo tình trạng giao hàng"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Đà tăng trưởng kinh doanh</strong></td>
-    <td align="center"><strong>Giao hàng và sự hài lòng khách hàng</strong></td>
-  </tr>
-</table>
+![Mua lại trong 90 ngày kèm khoảng tin cậy](assets/first_order_delivery_retention.png)
 
-<table>
-  <tr>
-    <td width="50%"><img src="assets/top_categories_product_value.png" alt="Ngành hàng dẫn đầu theo product value"></td>
-    <td width="50%"><img src="assets/top_states_gmv.png" alt="Tỉnh/bang dẫn đầu theo GMV đã giao"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Danh mục sản phẩm</strong></td>
-    <td align="center"><strong>Mức độ tập trung theo khu vực</strong></td>
-  </tr>
-</table>
+## Chạy trên máy
 
-<table>
-  <tr>
-    <td width="100%"><img src="assets/first_order_delivery_retention.png" alt="Tỷ lệ mua lại theo tình trạng giao hàng của đơn đầu tiên"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Retention theo trải nghiệm giao hàng của đơn đầu tiên</strong></td>
-  </tr>
-</table>
+Đặt chín CSV nguồn được liệt kê ở [data/README.md](data/README.md) vào `data/raw/`. Dữ liệu gốc không được đưa lên Git.
 
-## Cấu trúc repository
-
-```text
-assets/          Ảnh preview dashboard, sơ đồ, và biểu đồ phân tích
-data/
-  raw/           File nguồn gốc, không đưa lên Git
-  processed/     File phân tích đã sinh ra, không đưa lên Git
-  sample/        Tài liệu cho ví dụ dữ liệu mẫu nhẹ
-notebooks/       Notebook phân tích khám phá đã chạy
-reports/         Tài liệu data model, inventory, processing, và KPI
-sql/             Schema, transform, view, KPI, và kiểm tra trên SQL Server
-src/             Script Python xử lý, kiểm tra, và export dữ liệu cho dashboard
-dashboard/       Next.js, React, TypeScript, và file analytics JSON đã sinh ra
-```
-
-## Chạy ở local
-
-### 1. Lấy bộ dữ liệu
-
-Tải bộ **Brazilian E-Commerce Public Dataset by Olist** từ Kaggle và đặt 9 file CSV gốc vào `data/raw/`. Tên file chính xác được liệt kê trong [`data/README.md`](data/README.md).
-
-Gói local tải về của project này đã sẵn có dữ liệu nguồn. Các file này vẫn bị loại trừ bởi `.gitignore`, nên sẽ không bị push lên GitHub khi dùng Git bình thường.
-
-### 2. Build và kiểm tra dữ liệu phân tích
-
-```bash
+```sh
 python -m venv .venv
-
-# Windows (PowerShell)
-.venv\Scripts\Activate.ps1
-
-# macOS/Linux
-source .venv/bin/activate
-
+# Kích hoạt .venv theo shell đang dùng, sau đó:
 python -m pip install -r requirements.txt
 python src/run_pipeline.py
-```
-
-Chạy thành công sẽ kết thúc bằng:
-
-```text
-CHECKS_OK|files=9|orders=99441|items=112650
-DASHBOARD_DATA_OK|dashboard/data/analytics.json
-PIPELINE_OK
-```
-
-### 3. Chạy dashboard
-
-```bash
+python -m unittest discover -s tests -v
 cd dashboard
-npm install
+npm ci
 npm run dev
 ```
 
-Mở `http://localhost:3000`.
+Mở `http://localhost:3000` để xem overview và `/delivery` để lọc báo cáo giao hàng. Pipeline cũng xuất hai CSV dùng cho Power BI. Trên máy khác, chạy `python powerbi/configure.py` từ thư mục gốc rồi mở `.pbip` và Refresh trong Desktop. Dashboard web chạy độc lập với Desktop.
 
-### 4. Build bản production của dashboard
+Trong `dashboard/`, `npm test` kiểm tra công thức metric; `npm run validate` chạy lint, type-check và build. CI chạy tests Python, kiểm tra dashboard và PBIR.
 
-```bash
-cd dashboard
-npm run lint
-npm run build
-```
+## SQL và tài liệu
 
-## Continuous integration
-
-`.github/workflows/quality.yml` chạy các kiểm tra tương tự ở mỗi lần push: compile source Python, validate `dashboard/data/analytics.json`, sau đó lint, type-check, và build dashboard.
-
-## Quy trình SQL Server
-
-Xem [`sql/README.md`](sql/README.md), sau đó chạy các script theo thứ tự sau:
-
-1. `00_create_database.sql`
-2. `01_create_tables.sql`
-3. `02_bulk_load_staging.sql`
-4. `03_transform_to_core.sql`
-5. `04_create_views.sql`
-6. `06_data_quality_checks.sql`
-7. `05_kpi_analysis.sql`
-
-## Tài liệu
+[sql/README.md](sql/README.md) ghi thứ tự chạy, gồm `07_delivery_retention.sql`. Nạp lại dữ liệu đã sửa trước khi chạy. Truy vấn giao hàng/mua lại mới vẫn cần một lần đối chiếu trực tiếp trên SQL Server; kết quả DAX trong Desktop được ghi riêng.
 
 - [Mô hình dữ liệu](reports/data_model.md)
-- [Kiểm kê dữ liệu gốc](reports/raw_data_inventory.md)
 - [Ghi chú xử lý](reports/processing_notes.md)
-- [Kết quả KPI từ SQL](reports/sql_kpi_results.md)
-- [Notebook EDA đã chạy](notebooks/01_olist_eda.ipynb)
-- [Tài liệu dashboard](dashboard/README.md)
+- [Trạng thái kiểm tra SQL](reports/sql_kpi_results.md)
+- [Dữ liệu cho dashboard](dashboard/README.md)
 
-## Hạn chế
-
-- Phân tích mang tính quan sát (observational), không khẳng định giao trễ là nguyên nhân gây ra điểm đánh giá thấp hơn hay tỷ lệ quay lại thấp hơn.
-- Dữ liệu kết thúc năm 2018, không phản ánh hiệu suất hiện tại của Olist.
-- Danh tính khách hàng đã được ẩn danh hóa, không có thuộc tính nhân khẩu học.
-- Không có dữ liệu ở cấp đơn vị vận chuyển, nên các đề xuất về logistics cần thêm dữ liệu vận hành.
-- Dữ liệu gốc không được đưa lên GitHub vì lý do dung lượng repo, cần tải riêng.
-
-## Công nghệ sử dụng
-
-`Python` · `Pandas` · `Jupyter` · `SQL Server 2019` · `T-SQL` · `Next.js` · `React` · `TypeScript` · `CSS`
-
-## Giấy phép
-
-Mã nguồn của project được phát hành theo [Giấy phép MIT](LICENSE). Bộ dữ liệu Olist vẫn tuân theo điều khoản gốc của nguồn dữ liệu.
-
-## Phân tích giao hàng và mua lại
-
-Trang `/delivery` có bộ lọc tháng, bang, nhóm hàng và xuất CSV theo lựa chọn. Phân tích mua lại dùng cửa sổ 90 ngày; loại khách chưa đủ thời gian theo dõi. [Case study](reports/delivery_case_study.md) ghi số mẫu và giới hạn. [Báo cáo Power BI](powerbi/README.md) có hai trang Delivery và Repeat purchase, mô hình TMDL và 19 measures; DAX đã được đối chiếu trực tiếp trong Desktop. Bản lưu là project `.pbip`, chưa có file `.pbix`.
-
-Định nghĩa giao trễ đã sửa sang so sánh ngày lịch. 1.292 đơn giao buổi tối trong đúng ngày hẹn trước đây bị tính nhầm. Tỷ lệ đúng trên toàn bộ đơn có đủ ngày là 6,77%, thay cho 8,11%. Snapshot đến 31/08/2018 có phạm vi riêng và tỷ lệ 6,72%.
+Dữ liệu kết thúc năm 2018, không có chi tiết đơn vị vận chuyển. Kết quả không phản ánh hiệu suất hiện tại hay chứng minh tác động nhân quả. Mã nguồn: [MIT](LICENSE); dữ liệu theo điều khoản của nguồn gốc.

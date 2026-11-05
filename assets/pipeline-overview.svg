@@ -1,44 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="360" viewBox="0 0 1400 360" role="img" aria-labelledby="title desc">
-  <title id="title">Olist analytics project pipeline</title>
-  <desc id="desc">Raw CSV files flow through Python processing, SQL Server validation, a generated JSON contract, and a Next.js dashboard.</desc>
-  <rect width="1400" height="360" fill="#f4f1e9"/>
-  <text x="70" y="62" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#142b3a">From marketplace files to a decision-ready data story</text>
-  <text x="70" y="93" font-family="Arial, sans-serif" font-size="14" fill="#68747a">A reproducible pipeline with independent Python and SQL quality checks</text>
-
-  <g font-family="Arial, sans-serif">
-    <g transform="translate(70 135)">
-      <rect width="210" height="135" rx="8" fill="#fffef9" stroke="#d9d6ce" stroke-width="2"/>
-      <circle cx="35" cy="35" r="18" fill="#17324d"/><text x="35" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">01</text>
-      <text x="25" y="82" font-size="20" font-weight="700" fill="#142b3a">Raw CSV</text>
-      <text x="25" y="108" font-size="13" fill="#68747a">9 files · 1.55M rows</text>
-    </g>
-    <text x="304" y="212" font-size="30" fill="#2878b5">→</text>
-    <g transform="translate(345 135)">
-      <rect width="210" height="135" rx="8" fill="#fffef9" stroke="#d9d6ce" stroke-width="2"/>
-      <circle cx="35" cy="35" r="18" fill="#2878b5"/><text x="35" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">02</text>
-      <text x="25" y="82" font-size="20" font-weight="700" fill="#142b3a">Python</text>
-      <text x="25" y="108" font-size="13" fill="#68747a">Clean · transform · test</text>
-    </g>
-    <text x="579" y="212" font-size="30" fill="#2878b5">→</text>
-    <g transform="translate(620 135)">
-      <rect width="210" height="135" rx="8" fill="#fffef9" stroke="#d9d6ce" stroke-width="2"/>
-      <circle cx="35" cy="35" r="18" fill="#b8d95d"/><text x="35" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#142b3a">03</text>
-      <text x="25" y="82" font-size="20" font-weight="700" fill="#142b3a">SQL Server</text>
-      <text x="25" y="108" font-size="13" fill="#68747a">Model · views · KPI checks</text>
-    </g>
-    <text x="854" y="212" font-size="30" fill="#2878b5">→</text>
-    <g transform="translate(895 135)">
-      <rect width="180" height="135" rx="8" fill="#fffef9" stroke="#d9d6ce" stroke-width="2"/>
-      <circle cx="35" cy="35" r="18" fill="#d94f5c"/><text x="35" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">04</text>
-      <text x="25" y="82" font-size="20" font-weight="700" fill="#142b3a">JSON</text>
-      <text x="25" y="108" font-size="13" fill="#68747a">Versioned data contract</text>
-    </g>
-    <text x="1099" y="212" font-size="30" fill="#2878b5">→</text>
-    <g transform="translate(1140 135)">
-      <rect width="190" height="135" rx="8" fill="#17324d" stroke="#17324d" stroke-width="2"/>
-      <circle cx="35" cy="35" r="18" fill="#fffef9"/><text x="35" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#17324d">05</text>
-      <text x="25" y="82" font-size="20" font-weight="700" fill="#fff">Next.js</text>
-      <text x="25" y="108" font-size="13" fill="#bdcbd5">Interactive data story</text>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+<title id="title">Olist data pipeline</title>
+<desc id="desc">Python cleans raw CSV files. Processed data feeds SQL Server, a dated delivery analysis, the web dashboard and Power BI. SQL queries run separately.</desc>
+<rect width="1400" height="520" fill="#f5f7f8"/>
+<g font-family="Arial, sans-serif" fill="#152d39">
+<text x="38" y="48" font-size="27" font-weight="700">One cleaned dataset, separate analysis outputs</text>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#2878b8"/></marker></defs>
+<rect x="38" y="100" width="210" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="56" y="130" font-size="19" font-weight="700">Raw data</text>
+<text x="56" y="157" font-size="14" fill="#526570">9 source CSVs</text>
+<text x="56" y="178" font-size="14" fill="#526570">1.55 million source rows</text>
+<rect x="300" y="100" width="210" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="318" y="130" font-size="19" font-weight="700">Python pipeline</text>
+<text x="318" y="157" font-size="14" fill="#526570">Clean and validate</text>
+<text x="318" y="178" font-size="14" fill="#526570">Order-level join checks</text>
+<rect x="562" y="100" width="230" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="580" y="130" font-size="19" font-weight="700">Processed data</text>
+<text x="580" y="157" font-size="14" fill="#526570">Relational CSVs</text>
+<text x="580" y="178" font-size="14" fill="#526570">No raw files in Git</text>
+<rect x="950" y="84" width="410" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="968" y="114" font-size="19" font-weight="700">SQL Server</text>
+<text x="968" y="141" font-size="14" fill="#526570">Staging / core / views</text>
+<text x="968" y="162" font-size="14" fill="#526570">KPI queries and quality checks</text>
+<rect x="562" y="310" width="230" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="580" y="340" font-size="19" font-weight="700">Dated analysis</text>
+<text x="580" y="367" font-size="14" fill="#526570">Cutoff: 31 Aug 2018</text>
+<text x="580" y="388" font-size="14" fill="#526570">90-day follow-up</text>
+<rect x="950" y="250" width="410" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="968" y="280" font-size="19" font-weight="700">Next.js reports</text>
+<text x="968" y="307" font-size="14" fill="#526570">Overview: analytics.json</text>
+<text x="968" y="328" font-size="14" fill="#526570">Delivery: delivery-data.json</text>
+<rect x="950" y="380" width="410" height="110" rx="5" fill="white" stroke="#c4d0d6"/>
+<text x="968" y="410" font-size="19" font-weight="700">Power BI</text>
+<text x="968" y="437" font-size="14" fill="#526570">Local fact and cohort CSVs</text>
+<text x="968" y="458" font-size="14" fill="#526570">TMDL model / DAX / PBIR pages</text>
+<polyline points="248,155 290,155" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="510,155 552,155" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="792,145 940,145" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="677,210 677,300" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="792,185 850,185 850,274 940,274" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="792,350 865,350 865,325 940,325" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="792,380 865,380 865,420 940,420" fill="none" stroke="#2878b8" stroke-width="2" marker-end="url(#arrow)"/>
+</g></svg>

@@ -1,225 +1,72 @@
 # Olist E-commerce Analytics
 
-[🇬🇧 English](README.md) · [🇻🇳 Tiếng Việt](README.vi.md)
+[English](README.md) · [Tiếng Việt](README.vi.md)
 
-An end-to-end Data Analyst portfolio project that converts the Brazilian Olist marketplace dataset into a reproducible Python pipeline, a validated SQL Server model, documented business analysis, and an interactive Next.js data story.
+An analysis of Olist sales, delivery delays and repeat purchases. Python prepares the data; SQL Server holds the relational model; Next.js and Power BI present the results.
 
-![Delivery and retention report with filters, review samples and 90-day cohorts](assets/delivery-preview.png)
+![Delivery report with month, state and category filters](assets/delivery-preview.png)
 
-## Project at a glance
+Actual Next.js report. The screenshot uses the delivery snapshot through **31 Aug 2018**.
 
-| Scope | Result |
-|---|---:|
-| Source data | 9 CSV files · 1,550,922 rows |
-| Delivered orders analyzed | 96,478 |
-| Delivered GMV | R$15.42M |
-| Comparable Jan–Aug GMV growth | +143.3% YoY |
-| Late-delivery rate | 6.77% |
-| Review-score gap for late orders | −2.02 points |
+## Delivery and repeat-purchase findings
 
-> **Metric definition:** Delivered GMV is the sum of customer payment value for delivered orders and includes freight. Product value is reported separately and excludes freight.
+- **96,411** delivered orders observed by the cutoff; **6,475 / 96,411 (6.72%)** arrived late.
+- Mean review: **2.27/5** for late orders (**6,306** reviewed orders), versus **4.29/5** for on-time orders (**88,818**).
+- Repeat purchase within 90 days: **1,418 / 70,002 (2.03%)** after an on-time first order; **101 / 5,696 (1.77%)** after a late first order.
+- **17,595** newer customers are excluded because a complete 90-day follow-up is unavailable.
 
-## Business questions
+The repeat-rate confidence intervals overlap. These comparisons describe associations; they do not establish that delivery timing caused a change in customer behaviour. See the [case study](reports/delivery_case_study.md) and [exact counts](reports/delivery_findings.json).
 
-1. How did delivered GMV and order volume change over time?
-2. Which product categories and customer states generated the most value?
-3. How was delivery performance associated with review scores?
-4. Which operational segments deserve deeper investigation?
-5. What does the low repeat-customer rate suggest for retention analysis?
+## What is in the project
 
-## What I built
+- Cleaning and validation for nine related CSV files, with tests for keys, joins and order-level aggregation.
+- SQL Server staging/core tables, views, KPI queries and data-quality checks.
+- A sales overview and a `/delivery` report with month/state/category filters, review sample sizes and a filtered CSV export.
+- A [two-page Power BI project](powerbi/README.md), with TMDL model, Power Query and 19 DAX measures. [Desktop DAX checks](reports/powerbi_validation.json) reconcile totals, cohorts, the RJ filter and small-sample thresholds with Python. The saved report is `.pbip`; a `.pbix` export is not included.
+- An [EDA notebook](notebooks/01_olist_eda.ipynb) and charts generated from the processed data.
 
-- A reusable Python cleaning pipeline for nine related CSV files.
-- Automated checks for row counts, primary keys, composite keys, foreign keys, ZIP-code formatting, and calculated fields.
-- A SQL Server 2019 staging and core model with constraints, indexes, reusable views, KPI queries, and data-quality checks.
-- A Jupyter Notebook for exploratory analysis and portfolio charts.
-- A Next.js dashboard that imports a generated `analytics.json` file instead of hardcoded KPI values.
-- Reproducible setup scripts and documentation for local execution.
+![Python pipeline with separate SQL, web and Power BI outputs](assets/pipeline-overview.svg)
 
-## Data pipeline
+## Sales overview: a different scope
 
-![Olist analytics pipeline](assets/pipeline-overview.svg)
+The overview uses the final delivered-order dataset, rather than only deliveries observed by 31 Aug. It contains **96,478** delivered orders and **R$15.42M** of payment-based GMV, including freight. Comparable Jan–Aug GMV grew **143.3%** from 2017 to 2018.
 
-```text
-Raw CSV files
-    ↓
-Python cleaning and validation
-    ↓
-Processed analytical CSV files
-    ├── SQL Server staging → core model → KPI validation
-    └── Generated dashboard/data/analytics.json
-                              ↓
-                         Next.js dashboard
-```
+Its corrected late rate is **6,534 / 96,470 known-date orders (6.77%)**; eight delivered orders have missing delivery dates. Use **6.72%** for the dated delivery snapshot and **6.77%** for the full-data overview.
 
-## Key findings
+Late now compares calendar dates. The earlier timestamp calculation incorrectly marked **1,292 same-day deliveries** as late. The old **8.11%** rate and unrestricted late/on-time repeat comparison are superseded. The current cohort uses the same 90-day window for both groups.
 
-- Delivered GMV reached **R$15.42M** across **96,478** delivered orders.
-- Jan–Aug 2018 delivered GMV was **143.3%** above the comparable 2017 period.
-- **6.77%** of delivered orders arrived after the estimated delivery date.
-- Late orders averaged **2.27/5** in reviews versus **4.29/5** for on-time or early orders.
-- SP, RJ, and MG generated approximately **62.5%** of delivered GMV.
-- The repeat-customer rate was approximately **3.0%**.
-- The delivery report compares repeat purchases over a fixed 90-day window and excludes customers without enough follow-up; see the case study for denominators.
+## Selected charts
 
-## Selected analysis
+![Reviews by delivery status](assets/delivery_review.png)
 
-<table>
-  <tr>
-    <td width="50%"><img src="assets/monthly_gmv.png" alt="Monthly delivered GMV trend"></td>
-    <td width="50%"><img src="assets/delivery_review.png" alt="Review score by delivery status"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Commercial momentum</strong></td>
-    <td align="center"><strong>Delivery and customer satisfaction</strong></td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td width="50%"><img src="assets/top_categories_product_value.png" alt="Top product categories by product value"></td>
-    <td width="50%"><img src="assets/top_states_gmv.png" alt="Top customer states by delivered GMV"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Product portfolio</strong></td>
-    <td align="center"><strong>Geographic concentration</strong></td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td width="100%"><img src="assets/first_order_delivery_retention.png" alt="Repeat-purchase rate by first-order delivery status"></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Retention by first-order delivery experience</strong></td>
-  </tr>
-</table>
-
-## Repository structure
-
-```text
-assets/          Dashboard preview, diagrams, and analysis charts
-data/
-  raw/           Original source files, excluded from Git
-  processed/     Generated analytical files, excluded from Git
-  sample/        Documentation for lightweight examples
-notebooks/       Exploratory analysis notebook
-reports/         Data model, inventory, processing, and KPI documentation
-sql/             SQL Server schema, transformations, views, KPIs, and checks
-src/             Python processing, validation, and dashboard export scripts
-dashboard/       Next.js, React, TypeScript, and generated analytics JSON
-```
+![Repeat purchases within 90 days with confidence intervals](assets/first_order_delivery_retention.png)
 
 ## Run locally
 
-### 1. Get the dataset
+Download the nine source CSVs listed in [data/README.md](data/README.md) into `data/raw/`. Raw data is excluded from Git.
 
-Download the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle and place the nine original CSV files in `data/raw/`. The exact filenames are listed in [`data/README.md`](data/README.md).
-
-The downloadable local package of this project already includes the source data. The files remain excluded by `.gitignore`, so they are not pushed to GitHub when using Git normally.
-
-### 2. Build and validate the analytical data
-
-```bash
+```sh
 python -m venv .venv
-
-# Windows (PowerShell)
-.venv\Scripts\Activate.ps1
-
-# macOS/Linux
-source .venv/bin/activate
-
+# Activate .venv for your shell, then:
 python -m pip install -r requirements.txt
 python src/run_pipeline.py
-```
-
-A successful run ends with:
-
-```text
-CHECKS_OK|files=9|orders=99441|items=112650
-DASHBOARD_DATA_OK|dashboard/data/analytics.json
-PIPELINE_OK
-```
-
-### 3. Run the dashboard
-
-```bash
+python -m unittest discover -s tests -v
 cd dashboard
-npm install
+npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000` for the overview and `/delivery` for the filtered report. The pipeline also exports the local Power BI CSVs. To use the Power BI project on another machine, run `python powerbi/configure.py` from the repository root, then open the `.pbip` and refresh in Desktop. The web dashboard runs independently of Desktop.
 
-### 4. Build the production dashboard
+In `dashboard/`, `npm test` checks metric calculations and `npm run validate` runs lint, type-check and production build. CI runs the Python suite, dashboard checks and PBIR validation.
 
-```bash
-cd dashboard
-npm run lint
-npm run build
-```
+## SQL and analysis notes
 
-## Continuous integration
-
-`.github/workflows/quality.yml` runs the same checks on every push: compile the Python source, validate `dashboard/data/analytics.json`, run a small-data cleaning and KPI regression suite, then lint, type-check, and build the dashboard.
-
-## SQL Server workflow
-
-Follow [`sql/README.md`](sql/README.md), then execute the scripts in this order:
-
-1. `00_create_database.sql`
-2. `01_create_tables.sql`
-3. `02_bulk_load_staging.sql`
-4. `03_transform_to_core.sql`
-5. `04_create_views.sql`
-6. `06_data_quality_checks.sql`
-7. `05_kpi_analysis.sql`
-8. `07_delivery_retention.sql`
-
-## Documentation
+Follow [sql/README.md](sql/README.md) for script order, including `07_delivery_retention.sql`. Reload the corrected processed data first. The new delivery/retention query still needs a fresh SQL Server parity run; Desktop DAX validation is recorded separately.
 
 - [Data model](reports/data_model.md)
-- [Raw data inventory](reports/raw_data_inventory.md)
 - [Processing notes](reports/processing_notes.md)
-- [SQL KPI results](reports/sql_kpi_results.md)
-- [EDA notebook](notebooks/01_olist_eda.ipynb)
-- [Dashboard documentation](dashboard/README.md)
+- [SQL validation status](reports/sql_kpi_results.md)
+- [Dashboard data contracts](dashboard/README.md)
 
-## Limitations
-
-- The analysis is observational and does not establish that late delivery causes lower reviews or lower repeat behavior.
-- The dataset ends in 2018 and does not represent current Olist performance.
-- Customer identity is pseudonymized and demographic attributes are unavailable.
-- Carrier-level data is not included, so logistics recommendations require further operational data.
-- Raw data is excluded from GitHub because of repository size and must be downloaded separately.
-
-## Tech stack
-
-`Python` · `Pandas` · `Jupyter` · `SQL Server 2019` · `T-SQL` · `Next.js` · `React` · `TypeScript` · `CSS`
-
-## License
-
-Project code is available under the [MIT License](LICENSE). The Olist dataset remains subject to its original source terms.
-
-## Pipeline tests
-
-`python -m unittest discover -s tests -v` runs without downloading the full dataset or starting SQL Server. The fixture exercises cleaning, key checks and dashboard export. Tests also verify that duplicate item keys and unknown orders are rejected, and that order-level GMV is not multiplied by joins. Full-dataset row-count checks remain in `src/validate_processed_data.py`.
-
-## Delivery and retention report
-
-Open `/delivery` after starting the dashboard. Filters cover purchase month, customer state and primary product category. The report shows late-order counts, review coverage, sample thresholds and a 90-day repeat-purchase comparison with Wilson intervals. Export downloads the currently filtered segment summary.
-
-The snapshot includes purchases, deliveries and reviews observed by 31 Aug 2018, so its order count differs from the overview's final delivered-order count. Cohort filters describe the customer's first delivered order in available history.
-
-- [Case study and findings](reports/delivery_case_study.md)
-- [Exact counts and denominators](reports/delivery_findings.json)
-- [Power BI report: Delivery and Repeat purchase](powerbi/README.md)
-- [T-SQL analysis](sql/07_delivery_retention.sql)
-
-Rebuild with `python src/run_pipeline.py`. Run `python -m unittest discover -s tests -v`, then `npm test` and `npm run validate` in `dashboard/`.
-
-### Metric correction
-
-Late delivery now compares calendar dates rather than timestamps. The old method counted 1,292 evening deliveries on the promised day as late. The full dataset contains 6,534 late orders among 96,470 orders with known dates (6.77%); eight delivered orders have missing delivery dates. The previous 8.11% figure is superseded.
-
-The Power BI report is an editable `.pbip` project with a TMDL model and two PBIR report pages. Its DAX results were checked in Power BI Desktop against the Python findings; see [validation](reports/powerbi_validation.json). No `.pbix` export is included. The T-SQL script still needs to be run against the refreshed SQL model before claiming a new SQL Server validation.
+The data is historical and ends in 2018. It has no carrier-level detail and cannot establish current Olist performance or causal effects. Code: [MIT](LICENSE); source data remains subject to its original terms.
