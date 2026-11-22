@@ -4,6 +4,8 @@
 *.jpg binary
 *.jpeg binary
 *.zip binary
+*.xlsx binary
+*.pdf binary
 
 # Notebook output (embedded chart images) inflates GitHub's Languages bar -
 # exclude it from language stats without hiding or changing the file itself.

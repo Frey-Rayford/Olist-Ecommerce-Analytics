@@ -1,0 +1,117 @@
+{
+  "snapshot": "2018-08-31",
+  "checks": [
+    {
+      "name": "Power Query refresh",
+      "orders": 96411,
+      "status": "pass"
+    },
+    {
+      "name": "Native PivotTables and shared slicers",
+      "pivots": 2,
+      "slicers": 2,
+      "status": "pass"
+    },
+    {
+      "name": "Dashboard filters",
+      "month": "All",
+      "state": "All",
+      "category": "All",
+      "actual": {
+        "gmv": 15407859.71999966,
+        "orders": 96411.0,
+        "late_rate": 0.0671603862629783,
+        "review": 4.155950829093253
+      },
+      "status": "pass"
+    },
+    {
+      "name": "Dashboard filters",
+      "month": "All",
+      "state": "RJ",
+      "category": "All",
+      "actual": {
+        "gmv": 2054062.1699999736,
+        "orders": 12338.0,
+        "late_rate": 0.12019776300859135,
+        "review": 3.9655617854001757
+      },
+      "status": "pass"
+    },
+    {
+      "name": "Dashboard filters",
+      "month": "2018-01",
+      "state": "SP",
+      "category": "All",
+      "actual": {
+        "gmv": 418496.08000000054,
+        "orders": 2975.0,
+        "late_rate": 0.03428571428571429,
+        "review": 4.191813261163735
+      },
+      "status": "pass"
+    },
+    {
+      "name": "Dashboard filters",
+      "month": "All",
+      "state": "All",
+      "category": "health_beauty",
+      "actual": {
+        "gmv": 1410262.6100000073,
+        "orders": 8606.0,
+        "late_rate": 0.07448291889379503,
+        "review": 4.231612725411449
+      },
+      "status": "pass"
+    },
+    {
+      "name": "Dashboard filters",
+      "month": "2016-11",
+      "state": "All",
+      "category": "All",
+      "actual": {
+        "gmv": 0.0,
+        "orders": 0.0,
+        "late_rate": "—",
+        "review": "—"
+      },
+      "status": "pass"
+    },
+    {
+      "name": "RJ slicer filters both pivots",
+      "orders": 12338,
+      "status": "pass"
+    },
+    {
+      "name": "Edited source > Power Query > formulas > pivots; source restored",
+      "status": "pass"
+    },
+    {
+      "name": "Missing payments retained as missing",
+      "orders": 1,
+      "status": "pass"
+    },
+    {
+      "name": "Quality checks, Python parity, no Excel error cells",
+      "status": "pass"
+    },
+    {
+      "name": "Saved .xlsx reopens with cached results, query and slicers",
+      "status": "pass"
+    },
+    {
+      "name": "Monthly and States chart scopes match Python under four filter combinations",
+      "status": "pass"
+    },
+    {
+      "name": "September 2016 has one order but no payment: GMV unavailable; tiny-baseline growth suppressed",
+      "status": "pass"
+    },
+    {
+      "name": "Portable package reopens; slicer layout and original source values preserved",
+      "status": "pass"
+    }
+  ],
+  "excel_version": "16.0",
+  "workbook_sha256": "2cbf2626e5c51ee7208533f5d9fea4a69c56ca1c12840e9853b0d73920017c79"
+}

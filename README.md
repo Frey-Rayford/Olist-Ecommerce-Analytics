@@ -2,7 +2,7 @@
 
 [English](README.md) · [Tiếng Việt](README.vi.md)
 
-An analysis of Olist sales, delivery delays and repeat purchases. Python prepares the data; SQL Server holds the relational model; Next.js and Power BI present the results.
+An analysis of Olist sales, delivery delays and repeat purchases. Python prepares the data; SQL Server holds the relational model; Next.js, Power BI and Excel present the results.
 
 ![Delivery report with month, state and category filters](assets/delivery-preview.png)
 
@@ -23,9 +23,20 @@ The repeat-rate confidence intervals overlap. These comparisons describe associa
 - SQL Server staging/core tables, views, KPI queries and data-quality checks.
 - A sales overview and a `/delivery` report with month/state/category filters, review sample sizes and a filtered CSV export.
 - A [two-page Power BI project](powerbi/README.md), with TMDL model, Power Query and 19 DAX measures. [Desktop DAX checks](reports/powerbi_validation.json) reconcile totals, cohorts, the RJ filter and small-sample thresholds with Python. The saved report is `.pbip`; a `.pbix` export is not included.
+- An [Excel workbook](excel/README.md) with embedded order data, Power Query, formula-based reporting, two native PivotTables and shared slicers. It opens with saved results and does not require SQL Server or an API.
 - An [EDA notebook](notebooks/01_olist_eda.ipynb) and charts generated from the processed data.
 
 ![Python pipeline with separate SQL, web and Power BI outputs](assets/pipeline-overview.svg)
+
+## Excel: open the report and inspect the calculations
+
+[Download Olist_Operations.xlsx](https://github.com/Frey-Rayford/Olist-Ecommerce-Analytics/raw/refs/heads/main/excel/Olist_Operations.xlsx) · [English guide](excel/README.md) · [Hướng dẫn tiếng Việt](excel/README.vi.md)
+
+![Excel sales and delivery dashboard](assets/excel-dashboard.png)
+
+The workbook uses the same **96,411-order snapshot** as the delivery report. It is designed for someone who wants to filter sales and delivery metrics, inspect the formulas, or explore orders directly in Excel. `SUMIFS` and `COUNTIFS` drive the summaries; `INDEX/MATCH` looks up regions; native PivotTables share month/state slicers. The Power Query source is an embedded Excel Table, so refresh does not depend on a local file path.
+
+The dashboard shows GMV, delivered orders, late-delivery rate and review scores with denominators. Category selection assigns the **whole order** to its primary category; it is not item-level category revenue. [Desktop validation](excel/validation.json) checks Python parity, filter combinations, shared slicers, refresh after an input edit, and reopening the saved workbook. See the guides for the manual query-then-pivot refresh order and original-snapshot checks.
 
 ## Sales overview: a different scope
 

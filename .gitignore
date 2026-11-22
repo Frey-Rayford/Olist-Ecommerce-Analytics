@@ -39,6 +39,12 @@ data/processed/*
 # Local Power BI imports (generated from the processed data)
 powerbi/data/
 
+# Excel lock files and local print previews
+~$*.xlsx
+excel/preview.pdf
+excel/*-preview.pdf
+excel/*-check.png
+
 # Power BI Desktop local caches and user settings
 **/.pbi/
 *.pbix

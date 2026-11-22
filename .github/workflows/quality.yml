@@ -26,6 +26,9 @@ jobs:
           python -m pip install pandas numpy
           python -m unittest discover -s tests -v
 
+      - name: Validate saved Excel workbook and metric parity
+        run: python excel/validate_package.py
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:

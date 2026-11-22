@@ -2,7 +2,7 @@
 
 [English](README.md) · [Tiếng Việt](README.vi.md)
 
-Phân tích doanh thu, giao hàng và mua lại từ dữ liệu Olist. Python xử lý dữ liệu; SQL Server lưu mô hình quan hệ; Next.js và Power BI trình bày kết quả.
+Phân tích doanh thu, giao hàng và mua lại từ dữ liệu Olist. Python xử lý dữ liệu; SQL Server lưu mô hình quan hệ; Next.js, Power BI và Excel trình bày kết quả.
 
 ![Báo cáo giao hàng với bộ lọc tháng, bang và nhóm hàng](assets/delivery-preview.png)
 
@@ -23,9 +23,20 @@ Khoảng tin cậy của hai tỷ lệ mua lại chồng lấp nhau. Đây là l
 - Bảng staging/core, view, truy vấn KPI và kiểm tra chất lượng trên SQL Server.
 - Trang tổng quan doanh thu và báo cáo `/delivery`: lọc tháng/bang/nhóm hàng, hiển thị số mẫu review, xuất CSV theo bộ lọc.
 - [Project Power BI hai trang](powerbi/README.md), gồm model TMDL, Power Query và 19 measures DAX. [Kiểm tra DAX trong Desktop](reports/powerbi_validation.json) đã khớp Python về tổng, cohort, bộ lọc RJ và ngưỡng mẫu nhỏ. Bản lưu là `.pbip`, chưa có bản xuất `.pbix`.
+- [Workbook Excel](excel/README.vi.md) có sẵn dữ liệu đơn hàng, Power Query, báo cáo bằng công thức, hai PivotTable thật và slicer dùng chung. Mở file xem kết quả đã lưu, không cần SQL Server hay API.
 - [Notebook EDA](notebooks/01_olist_eda.ipynb) và các biểu đồ từ dữ liệu đã xử lý.
 
 ![Pipeline Python với các đầu ra SQL, web và Power BI riêng](assets/pipeline-overview.svg)
+
+## Excel: mở báo cáo và kiểm tra công thức
+
+[Tải Olist_Operations.xlsx](https://github.com/Frey-Rayford/Olist-Ecommerce-Analytics/raw/refs/heads/main/excel/Olist_Operations.xlsx) · [Hướng dẫn tiếng Việt](excel/README.vi.md) · [English guide](excel/README.md)
+
+![Dashboard Excel về bán hàng và giao hàng](assets/excel-dashboard.png)
+
+Workbook dùng cùng **snapshot 96.411 đơn** với báo cáo giao hàng. Người xem có thể lọc chỉ số, đọc công thức hoặc xem chi tiết đơn ngay trong Excel. Các bảng tổng hợp dùng `SUMIFS`, `COUNTIFS`; `INDEX/MATCH` tra vùng; hai PivotTable dùng chung slicer tháng/bang. Power Query đọc bảng có sẵn trong workbook, không phụ thuộc đường dẫn riêng trên máy.
+
+Dashboard trình bày GMV, số đơn đã giao, tỷ lệ trễ và review kèm mẫu số. Bộ lọc nhóm hàng phân bổ **toàn bộ đơn** theo nhóm hàng chính, không phải doanh thu từng sản phẩm trong nhóm. [Kiểm tra trên Excel Desktop](excel/validation.json) đối chiếu Python, nhiều bộ lọc, slicer dùng chung, sửa nguồn rồi refresh và mở lại file đã lưu. Hướng dẫn ghi rõ thứ tự refresh query rồi PivotTable và cách so với snapshot gốc.
 
 ## Tổng quan doanh thu: phạm vi khác
 
